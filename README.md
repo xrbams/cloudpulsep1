@@ -1,34 +1,54 @@
-### Author: Baraka Msakamali <baraka.msakamali@tuni.fi>
+### Author: Baraka
 
-### Date: 2023-11-29
+### Date: 2023-06-10
 
-## Instructions to setup and run. 
+# CLoud Pulse Database by Baraka.
 
-simply download the files and place them all in the same directory.
-- run npm i
-- run npm start
+### Details
 
-- this will have the `node server.js`
-- and simply access localhost:8080/ for all the api end points.
+This project is a minimal representation of a scalable and fault tolerant database using Lambda Architecture on Google Cloud. 
 
+This is a high level complex database that is to b developed for the next several Sprints. 
+
+
+### Tools and Technologies
+
+-   Google Cloud Platform (GCP)
+
+-   Pulumi Iac
+
+-   Apache Beam (Google Cloud Dataflow)
+
+-   Google Cloud Pub/Sub
+
+-   Google Cloud Storage
+
+-   BigQuery
+
+-   Cloud Functions / App Engine
+
+-   Stackdriver (Monitoring and Logging)
+
+
+## Instructions to setup and run.
 
 ### get all players & post a player at: 
-- localhost:8080/players
+- <site-name>/players
 
 ### get a player by id: 
-- localhost:8080/players/:id
+- <site-name>/players/:id
 
 ### update a players team at: 
-- localhost:8080/players/:id/teams
+- <site-name>/players/:id/teams
 
 
 ### get all teams and post a team at: 
-- localhost:8080/teams
+- <site-name>/teams
 
 ### get a team by the name
-- localhost:8080/teams/:team
+- <site-name>/teams/:team
 
 ### update a teams city at: 
-- localhost:8080/teams/:place
+- <site-name>/teams/:place
 
 
