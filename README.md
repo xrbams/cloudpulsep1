@@ -10,6 +10,7 @@ This project is a minimal representation of a scalable and fault tolerant databa
 
 This is a high level complex database that is to b developed for the next several Sprints. 
 
+https://github.com/xrbams/cloudpulsep1/assets/112469099/f6209543-8ee8-4d92-bdb6-a47813a696a7
 
 ### Tools and Technologies
 
