@@ -1,66 +1,28 @@
-const { Model, DataTypes } = require("sequelize");
+const { bigQueryClient, datasetId } = require('./database');
 
-const sequelize = require("./database");
+const tableId = 'players';
 
+async function createPlayer(id, first_name, last_name, age, nationality, height, weight, position) {
+  const query = `
+    INSERT INTO \`${datasetId}.${tableId}\` (id, first_name, last_name, age, nationality, height, weight, position)
+    VALUES (@id, @first_name, @last_name, @age, @nationality, @height, @weight, @position)
+  `;
+  const options = {
+    query: query,
+    params: { id, first_name, last_name, age, nationality, height, weight, position },
+  };
 
-class Players extends Model {}
+  await bigQueryClient.query(options);
+  console.log(`Player ${first_name} ${last_name} created successfully.`);
+}
 
-Players.init({
-    // Model attributes (table columns) are defined here
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: false,
-    },
-    first_name: {
-      type: DataTypes.STRING,   
-      defaultValue: "donkey",
-      allowNull: false,
-    },
-    last_name: {
-        type: DataTypes.STRING,  
-        defaultValue: "kong", 
-        allowNull: false,
-    },
-    age: {
-        type: DataTypes.INTEGER,    
-        defaultValue: 10,
-        allowNull: false,
-    },
-    nationality: {
-        type: DataTypes.STRING,   
-        defaultValue: "Finnish", 
-        allowNull: false,
-    },
-    height: {
-        type: DataTypes.INTEGER,    
-        defaultValue: 170,
-        allowNull: false,
-    },
-    weight: {
-        type: DataTypes.INTEGER,    
-        defaultValue: 20,
-        allowNull: false,
-    },
-    position: {
-        type: DataTypes.STRING,   
-        defaultValue: "GoalKeeper", 
-        allowNull: false,
-    },
-      
-}, {
-    sequelize,   // pass the connection instance
-    tableName: "Players",         // In database
+async function getPlayers() {
+  const query = `SELECT * FROM \`${datasetId}.${tableId}\``;
+  const [rows] = await bigQueryClient.query(query);
+  return rows;
+}
 
-
-    // Fields createdAt and updatedAt (DataTypes.DATE) would be
-    // added automatically to model
-    timestamps: false
-});
-
-
-
-module.exports = Players;
-
-
+module.exports = {
+  createPlayer,
+  getPlayers
+};
