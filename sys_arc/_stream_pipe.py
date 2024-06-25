@@ -30,8 +30,11 @@ def run():
     google_cloud_options.region = region
     google_cloud_options.staging_location = f'gs://{bucket_name}/staging'
     google_cloud_options.temp_location = f'gs://{bucket_name}/temp'
-    options.view_as(StandardOptions).runner = 'DirectRunner'
+    options.view_as(StandardOptions).runner = 'DataflowRunner'
     options.view_as(StandardOptions).streaming = True
+
+    # Add maxNumWorkers to limit the number of workers
+    # options.view_as(StandardOptions).max_num_workers = 10
 
      # Define the schema for BigQuery table
     schema = {
@@ -53,6 +56,7 @@ def run():
         (p
          | 'Read from Pub/Sub' >> ReadFromPubSub(subscription=f'projects/{project_id}/subscriptions/{subs}')
          | 'Parse JSON' >> beam.Map(lambda msg: json.loads(msg.decode('utf-8')))
+         | 'Log Elements' >> beam.Map(lambda elem: logging.info(f'Received element: {elem}') or elem)
          | 'Validate and Process Data' >> beam.Map(lambda data: {
              'id': int(data.get('id', 0)),
              'first_name': data.get('first_name', ''),
@@ -79,6 +83,7 @@ def run():
     )
 
 run()
+
 # if __name__ == '__main__':
 #     run()
 #     print("Stream Job Running.....")
