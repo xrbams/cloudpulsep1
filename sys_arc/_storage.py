@@ -43,3 +43,27 @@ def setup_storage():
     pulumi.export('dataset_id', dataset.dataset_id)
     pulumi.export('teams_table', teams_table.table_id)
     pulumi.export('players_table', players_table.table_id)
+
+
+def data_in():
+    # Configuration
+    config = pulumi.Config('gcp')
+    project = config.require('project')
+    region = config.require('region')
+
+    # Create a Pub/Sub topic
+    topic = gcp.pubsub.Topic('player-updates')
+
+    # Create a Cloud Storage bucket for batch data
+    bucket = gcp.storage.Bucket('data-bucket',
+        location=region  # Specify the location property
+    )
+
+    # # Create a Cloud Storage bucket for temp data
+    # temp_bucket = gcp.storage.Bucket('temp-bucket',
+    #     location=region  # Specify the location property
+    # )
+
+    pulumi.export('bucket_name', bucket.name)
+    # pulumi.export('temp_bucket_name', temp_bucket.name)
+    pulumi.export('topic_name', topic.name)
