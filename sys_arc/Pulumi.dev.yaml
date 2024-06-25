@@ -1,2 +1,3 @@
 config:
   gcp:project: smart-charter-422809-k0
+  gcp:region: us-west1
