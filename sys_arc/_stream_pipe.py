@@ -7,10 +7,16 @@ from apache_beam.io.gcp.bigquery import WriteToBigQuery
 import pulumi
 import pulumi_gcp as gcp
 
+import logging
+
 class ParseMessage(beam.DoFn):
     def process(self, message):
-        record = json.loads(message)
-        return [record]
+        try:
+            record = json.loads(message)
+            return [record]
+        except json.JSONDecodeError as e:
+            logging.error(f'Error decoding JSON: {e}')
+            return []
 
 #pubsub: player-updates-1de6ac7
 #subscription: player-updates-sub-ea61560
@@ -55,7 +61,7 @@ def run():
     with beam.Pipeline(options=options) as p:
         (p
          | 'Read from Pub/Sub' >> ReadFromPubSub(subscription=f'projects/{project_id}/subscriptions/{subs}')
-         | 'Parse JSON' >> beam.Map(lambda msg: json.loads(msg.decode('utf-8')))
+         | 'Parse JSON' >> beam.ParDo(ParseMessage())
          | 'Log Elements' >> beam.Map(lambda elem: logging.info(f'Received element: {elem}') or elem)
          | 'Validate and Process Data' >> beam.Map(lambda data: {
              'id': int(data.get('id', 0)),
@@ -68,12 +74,12 @@ def run():
              'position': data.get('position', '')
          })
          | 'Write to BigQuery' >> WriteToBigQuery(
-             table=f'{project_id}:sports_data.players',
+             table=f'{project_id}:sports_data.realtime_players',
              schema=schema,
              create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
              write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND
          ))
-    
+
     stream_dataflow_job = gcp.dataflow.Job(
         'stream-job',
         template_gcs_path=None,
@@ -82,8 +88,3 @@ def run():
         environment={'stagingLocation': f'gs://{bucket_name}/staging'}
     )
 
-run()
-
-# if __name__ == '__main__':
-#     run()
-#     print("Stream Job Running.....")

@@ -40,9 +40,27 @@ def setup_storage():
         ]"""
     )
 
+    # Create the realtime_players table
+    rt_players_table = gcp.bigquery.Table(
+        'rt_players-table',
+        dataset_id=dataset.dataset_id,
+        table_id='rt_players',
+        schema="""[
+            {"name": "id", "type": "INTEGER", "mode": "REQUIRED"},
+            {"name": "first_name", "type": "STRING", "mode": "REQUIRED"},
+            {"name": "last_name", "type": "STRING", "mode": "REQUIRED"},
+            {"name": "age", "type": "INTEGER", "mode": "REQUIRED"},
+            {"name": "nationality", "type": "STRING", "mode": "REQUIRED"},
+            {"name": "height", "type": "INTEGER", "mode": "REQUIRED"},
+            {"name": "weight", "type": "INTEGER", "mode": "REQUIRED"},
+            {"name": "position", "type": "STRING", "mode": "REQUIRED"}
+        ]"""
+    )
+
     pulumi.export('dataset_id', dataset.dataset_id)
     pulumi.export('teams_table', teams_table.table_id)
     pulumi.export('players_table', players_table.table_id)
+    pulumi.export('rt_players_table', rt_players_table.table_id)
 
 
 def data_in():
