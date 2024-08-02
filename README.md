@@ -56,68 +56,55 @@ The project implements Lambda Architecture, which combines batch and real-time p
 
 1.  **Clone the repository**:
 
-    sh
-
-    Copy code
-
-    `git clone https://github.com/xrbams/cloudpulsep1.git
-    cd cloudpulsep1`
+    ```
+    git clone https://github.com/xrbams/cloudpulsep1.git
+    cd cloudpulsep1
+    ```
 
 2.  **Install dependencies**:
 
-    sh
-
-    Copy code
-
-    `# Example for Python dependencies
-    pip install -r requirements.txt`
+    #### Install Python dependencies
+    ```
+    pip install -r requirements.txt
+    ```
 
 3.  **Provision infrastructure**:
 
-    sh
-
-    Copy code
-
-    `# Using Pulumi
-    pulumi up`
+    #### Using Pulumi
+    ```
+    pulumi up
+    ```
 
 4.  **Deploy applications**:
 
-    sh
-
-    Copy code
-
-    `# Example for Kubernetes
-    kubectl apply -f kubernetes/deployment.yaml`
+    #### Example for Kubernetes
+    ```
+    kubectl apply -f kubernetes/deployment.yaml
+    ```
 
 ### Usage
 
 -   **Running Batch Jobs**:
 
-    sh
-
-    Copy code
-
-    `# Example Spark job
-    spark-submit jobs/batch_job.py`
+    #### Example Spark job
+    ```
+    spark-submit jobs/batch_job.py
+    ```
 
 -   **Consuming Real-Time Data**:
 
-    sh
-
-    Copy code
-
-    `# Example Kafka consumer
-    python consumers/real_time_consumer.py`
+    #### Example Kafka consumer
+    ```
+    python consumers/real_time_consumer.py
+    
+    ```
 
 -   **Querying Data**:
 
-    sh
-
-    Copy code
-
-    `# Example MySQL query
-    mysql -u user -p -e 'SELECT * FROM data_table;'`
+    #### Example MySQL query
+    ```
+    mysql -u user -p -e 'SELECT * FROM data_table;'
+    ```
 
 ### Contributing
 
