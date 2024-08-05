@@ -4,11 +4,10 @@ on:
   push:
     branches:
       - 'main'
-      - 'system-architecture'
+    
   pull_request:
     branches:
       - 'main'
-      - 'system-architecture'
 
 jobs:
   test:
@@ -29,4 +28,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run database tests
-        run: pytest test_database.py
+        run: pytest
