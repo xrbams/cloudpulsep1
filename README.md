@@ -8,7 +8,7 @@
 
 This project is a minimal representation of a scalable and fault-tolerant database using Lambda Architecture on Google Cloud. This is a high-level complex database that will be developed over the next several sprints.
 
-![cloude](https://github.com/xrbams/cloudpulsep1/assets/112469099/f6209543-8ee8-4d92-bdb6-a47813a696a7)
+
 
 ### Table of Contents
 
@@ -26,24 +26,18 @@ This project is a minimal representation of a scalable and fault-tolerant databa
 
 Cloud Pulse Database is designed to be a robust and scalable solution for handling large volumes of data with fault tolerance and high availability. It leverages the power of Google Cloud Platform and various open-source technologies to provide a comprehensive database solution.
 
-### Architecture
-
-The project implements Lambda Architecture, which combines batch and real-time processing to provide accurate and up-to-date results. The architecture consists of:
-
--   **Batch Layer**: Processes large volumes of historical data using Apache Spark.
--   **Speed Layer**: Handles real-time data streams using Kafka.
--   **Serving Layer**: Merges results from the batch and speed layers to provide query results.
+### Goal of the Project
+The main goal of this project is to design and build an end-to-end data engineering pipeline to solve [World Hunger] by ingesting, processing, and transforming data from a source system into a relational database and migrating it to a cloud data warehouse, all while implementing batch and stream processing pipelines and integrating with both SQL and NoSQL databases.
 
 ### Tools and Technologies
 
--   **Google Cloud Platform (GCP)**: Provides the infrastructure for the entire solution.
--   **Pulumi IaC**: Used for infrastructure as code to manage and provision cloud resources.
--   **Apache Beam (Google Cloud Dataflow)**: Transitioning to **Apache Spark** for data processing.
--   **Google Cloud Pub/Sub**: Transitioning to **Kafka** for real-time messaging.
--   **Google Cloud Storage**: Used for storing raw data and intermediate results.
--   **BigQuery**: Transitioning to **MySQL** for data warehousing.
--   **Cloud Functions / App Engine**: Transitioning to **Kubernetes** for container orchestration.
--   **Stackdriver**: Transitioning to **Prometheus / Grafana** for monitoring and logging.
+-   **Data Ingestion and Cleaning**: Python, Pandas, Numpy.
+-   **Database**: PostgreSQL, Databricks.
+-   **Data Processing**: Apache Spark, Apache Kafka.
+-   **Pipeline Management**: Apache Airflow.
+-   **NoSQL Database**: ElasticSearch.
+-   **Cloud Platform**: Databricks.
+-   **Data Migration**: Postgres to Databricks, Postgres to NoSQL.
 
 ### Features
 
@@ -52,75 +46,56 @@ The project implements Lambda Architecture, which combines batch and real-time p
 -   **Real-Time Processing**: Combines batch processing with real-time data streams for up-to-date results.
 -   **Flexible Architecture**: Modular components that can be easily replaced or upgraded.
 
-### Setup and Installation
+### Project Structure
 
-1.  **Clone the repository**:
+1.  **Data Ingestion & Cleaning**:
 
-    ```
-    git clone https://github.com/xrbams/cloudpulsep1.git
-    cd cloudpulsep1
-    ```
+    - Source: Obtain datasets from Kaggle or other sources (CSV, APIs, etc.).
+    - Ingestion: Use Apache Spark in Databricks to ingest data from multiple formats (CSV, API, NoSQL).
+    - Data Cleaning & Preprocessing:
+    - Clean and preprocess the data using Spark in Databricks.
+    - Store cleaned, structured data in PostgreSQL for SQL querying and analysis.
+    - If necessary, store unstructured/semi-structured data in Elasticsearch for search and indexing in later phases.
 
-2.  **Install dependencies**:
 
-    #### Install Python dependencies
-    ```
-    pip install -r requirements.txt
-    ```
+2.  **ETL Pipeline with Airflow**:
 
-3.  **Provision infrastructure**:
+    - Set up Apache Airflow to orchestrate ETL jobs, automating the data flow between ingestion, transformation, and storage.
+    - Core data transformations will happen using Apache Spark jobs in Databricks.
+    -  Migrate transformed, structured data into PostgreSQL for relational analysis and reporting.
+    - Optionally, store specific semi-structured/unstructured data in Elasticsearch for search and analytics (for real-time data).
 
-    #### Using Pulumi
-    ```
-    pulumi up
-    ```
+3.  **Data Processing (Batch and Stream)**:
 
-4.  **Deploy applications**:
+    - Batch Processing: Utilize Apache Spark in Databricks for cleaning, transforming, and processing data in batch jobs.
+    - Streaming: If needed, set up Apache Kafka for real-time streaming data ingestion.
+       - Kafka → Elasticsearch: Stream real-time data (e.g., logs, sensor data) directly to Elasticsearch for fast indexing, enabling immediate search and analysis.
 
-    #### Example for Kubernetes
-    ```
-    kubectl apply -f kubernetes/deployment.yaml
-    ```
+4.  **NoSQL Data Integration with Elasticsearch**:
 
-### Usage
+    - Store unstructured and semi-structured data (e.g., logs, JSON data, clickstreams) in Elasticsearch.
+    - Query Elasticsearch using its robust search features (text search, aggregation, filtering).
+    - Use Kibana to create real-time dashboards and visualizations based on the data stored in Elasticsearch.
+    - Justification: Elasticsearch is particularly suited for log analysis, real-time data exploration, and high-performance search over large datasets.. 
 
--   **Running Batch Jobs**:
+5.  **Data Lakehouse with Databricks**:
+    - Use Databricks Delta Lake for managing both structured and semi-structured data in a data lakehouse architecture.
+    - Delta Lake offers ACID transactions and scalability, serving as an intermediate data store for large-scale data transformations before pushing to PostgreSQL or Elasticsearch.
 
-    #### Example Spark job
-    ```
-    spark-submit jobs/batch_job.py
-    ```
+### Reflect and Learnings
 
--   **Consuming Real-Time Data**:
-
-    #### Example Kafka consumer
-    ```
-    python consumers/real_time_consumer.py
-    
-    ```
-
--   **Querying Data**:
-
-    #### Example MySQL query
-    ```
-    mysql -u user -p -e 'SELECT * FROM data_table;'
-    ```
-
-### Contributing
-
-We welcome contributions from the community. To contribute, please follow these steps:
-
-1.  Fork the repository.
-2.  Create a new branch (`git checkout -b feature-branch`).
-3.  Commit your changes (`git commit -m 'Add new feature'`).
-4.  Push to the branch (`git push origin feature-branch`).
-5.  Create a pull request.
+- Gained hands-on experience with the entire lifecycle of data engineering: ingestion, transformation, pipeline building, and data processing.
+- Familiarity with multiple databases (PostgreSQL, Databricks, NoSQL) and the specific challenges of migrating data between them.
+- Improved proficiency in batch and stream data processing using tools like Apache Kafka and Apache Spark.
+- Learned to automate workflows and pipeline scheduling with Apache Airflow.
 
 ### Future Work
 
--   **Integration with Machine Learning**: Adding capabilities to process and analyze data using machine learning algorithms.
--   **Enhanced Security**: Implementing advanced security features to protect data and infrastructure.
--   **Optimized Performance**: Continuously improving the performance of batch and real-time processing.
+- **Advanced Streaming Architectures**: Implement more advanced streaming use cases with real-time data pipelines using Apache Kafka.   
+- **Data Lake Integration**: Integrate with a cloud data lake for large-scale data storage and processing.
+- **Machine Learning Pipelines**: Use the processed data to feed into machine learning models.
+- **Advanced Data Modeling**: Implement more complex schema designs in Databricks or PostgreSQL.
+- **Cloud Infrastructure**: Deploy the entire pipeline on a cloud platform like AWS, GCP, or Azure.
 
 ### Contact
 
@@ -129,26 +104,5 @@ For any questions or inquiries, please contact:
 -   **Name**: Baraka
 -   **Email**: bmsakamali@gmail.com
 -   **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/bm-827832234/)
-
-## Instructions to setup and run.
-
-### get all players & post a player at: 
-- <site-name>/players
-
-### get a player by id: 
-- <site-name>/players/:id
-
-### update a players team at: 
-- <site-name>/players/:id/teams
-
-
-### get all teams and post a team at: 
-- <site-name>/teams
-
-### get a team by the name
-- <site-name>/teams/:team
-
-### update a teams city at: 
-- <site-name>/teams/:place
 
 
