@@ -16,17 +16,13 @@ This project is a minimal representation of a scalable and fault-tolerant databa
 -   [Architecture](#architecture)
 -   [Tools and Technologies](#tools-and-technologies)
 -   [Features](#features)
--   [Setup and Installation](#setup-and-installation)
--   [Usage](#usage)
--   [Contributing](#contributing)
+-   [Project Structure](#project-structure)
+-   [Reflect and Learnings](#reflect-and-learnings)
 -   [Future Work](#future-work)
 -   [Contact](#contact)
 
 ### Overview
 
-Cloud Pulse Database is designed to be a robust and scalable solution for handling large volumes of data with fault tolerance and high availability. It leverages the power of Google Cloud Platform and various open-source technologies to provide a comprehensive database solution.
-
-### Goal of the Project
 The main goal of this project is to design and build an end-to-end data engineering pipeline to solve [World Hunger] by ingesting, processing, and transforming data from a source system into a relational database and migrating it to a cloud data warehouse, all while implementing batch and stream processing pipelines and integrating with both SQL and NoSQL databases.
 
 ### Tools and Technologies
@@ -38,6 +34,7 @@ The main goal of this project is to design and build an end-to-end data engineer
 -   **NoSQL Database**: ElasticSearch.
 -   **Cloud Platform**: Databricks.
 -   **Data Migration**: Postgres to Databricks, Postgres to NoSQL.
+-   **Production Iac**: Terraform and Azure Databricks 
 
 ### Features
 
@@ -81,6 +78,49 @@ The main goal of this project is to design and build an end-to-end data engineer
 5.  **Data Lakehouse with Databricks**:
     - Use Databricks Delta Lake for managing both structured and semi-structured data in a data lakehouse architecture.
     - Delta Lake offers ACID transactions and scalability, serving as an intermediate data store for large-scale data transformations before pushing to PostgreSQL or Elasticsearch.
+
+6.  **Production Iac**
+    Once the data pipeline and processing components are built, implement IaC to automate infrastructure setup, ensuring smooth and scalable deployments.
+
+    **Provision Databricks Cluster:**
+
+    -   Use Terraform or CloudFormation to automate Databricks cluster deployment.
+    -   Define cluster settings (autoscaling, instance types, networking) in code.
+    -   Automate the connection between Databricks and your storage (S3, ADLS, etc.).
+
+    **Automate PostgreSQL Setup:**
+
+    -   Use Terraform or Ansible to provision and configure PostgreSQL.
+    -   Define security settings (VPC, subnets, security groups, backups).
+    -   Set up automatic scaling and replication for load handling.
+
+    **Set Up Apache Airflow:**
+
+    -   Automate Airflow deployment with Terraform or containerize it with Kubernetes.
+    -   Enable automatic scheduling, logging, and monitoring.
+
+    **Configure Elasticsearch & Kibana:**
+
+    -   Use Terraform to provision Elasticsearch and Kibana for real-time data visualization.
+    -   Define clusters, scaling policies, and storage configurations.
+
+    **Kafka Setup (if needed):**
+
+    -   Use IaC to automate Apache Kafka cluster setup for real-time streaming.
+    -   Automate topic creation and producer/consumer configuration.
+
+    **Monitoring & Logging:**
+
+    -   Automate deployment of tools like Prometheus or Grafana for system health monitoring.
+    -   Define logging and alerting strategies.
+
+    **Containerization (Optional):**
+
+    -   If using containers, define Docker images and use Terraform to provision Kubernetes clusters.
+
+    **CI/CD Pipeline:**
+
+    -   Set up CI/CD to automate deployment of code, infrastructure, and configuration updates.
 
 ### Reflect and Learnings
 
