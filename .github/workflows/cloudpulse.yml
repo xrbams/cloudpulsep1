@@ -29,3 +29,6 @@ jobs:
 
       - name: Run database tests
         run: pytest
+
+docker exec -it <container-id> bash
+pip install apache-airflow-providers-databricks
