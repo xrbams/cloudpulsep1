@@ -1,34 +1,57 @@
-name: CI
+name: CI/CD for Python Application with Pulumi and Astro
 
-on:
+on: 
   push:
     branches:
-      - 'main'
-    
+      - main
   pull_request:
-    branches:
-      - 'main'
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code from the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Step 2: Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'  # Adjust to your Python version
+          python-version: '3.x'  # Specify your Python version
 
+      # Step 3: Install dependencies from requirements.txt
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Step 4: Set up Pulumi CLI
+      - name: Set up Pulumi
+        uses: pulumi/actions@v4
+        with:
+          command: pulumi preview  # Change to `up` for deployment
+
+      # Step 5: Initialize Pulumi stack and deploy infrastructure
+      - name: Deploy infrastructure with Pulumi
+        working-directory: ./pulumi  # Navigate to Pulumi directory
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}  # Pulumi token
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pulumi up --yes  # Create or update the infrastructure
+
+      # Step 6: Start Astro Development server for tests
+      - name: Start Astro development server
+        working-directory: ../  # Navigate back to the root directory
+        run: astro dev start &  # Run in the background
+
+      # Step 7: Run tests using pytest
       - name: Run database tests
         run: pytest
 
-docker exec -it <container-id> bash
-pip install apache-airflow-providers-databricks
+      # Step 8: Stop the Astro server
+      - name: Stop Astro server
+        run: pkill -f 'astro dev start'

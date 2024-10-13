@@ -39,3 +39,12 @@ def create_transformed_folder(bucket):
         bucket=bucket.name,
         content="This is a sample text file in the transformed folder."
     )
+
+def create_big_query_bucket():
+    # Create an empty "transformed" folder in the bucket
+    bucket = storage.Bucket(
+        "big_query_temp",
+        location=bucket_location,
+        force_destroy=True  # If you want to allow auto-deletion of bucket
+    )
+    return bucket

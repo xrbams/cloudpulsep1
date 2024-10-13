@@ -27,8 +27,8 @@ from airflow.hooks.base_hook import BaseHook
 
 # Define constants for Databricks and GCS
 DATABRICKS_LOGIN_EMAIL = "bmsakamali@gmail.com"
-DATABRICKS_NOTEBOOK_NAME_1 = "postgre_nb"
-DATABRICKS_NOTEBOOK_NAME_2 = "postgre_nb2"
+DATABRICKS_NOTEBOOK_NAME_1 = "model_cars/cleaning"
+DATABRICKS_NOTEBOOK_NAME_2 = "model_cars/to_bigquery"
 DATABRICKS_NOTEBOOK_PATH_1 = f"/Users/{DATABRICKS_LOGIN_EMAIL}/{DATABRICKS_NOTEBOOK_NAME_1}"
 DATABRICKS_NOTEBOOK_PATH_2 = f"/Users/{DATABRICKS_LOGIN_EMAIL}/{DATABRICKS_NOTEBOOK_NAME_2}"
 DATABRICKS_JOB_CLUSTER_ID = "1008-100905-j1csvnee"
@@ -124,18 +124,6 @@ def upload_and_run_notebook(**kwargs):
             previous_task >> run_task
         kwargs['previous_task'] = run_task  # Update the previous task for the next iteration
 
-# Function to upload processed CSVs back to GCS
-def upload_processed_to_gcs(**kwargs):
-    for table in TABLES:
-        upload_task = LocalFilesystemToGCSOperator(
-            task_id=f"upload_{table}_to_gcs",
-            src=f"/tmp/{table}.csv",  # Local CSV file path
-            dst=f"{GCS_PROCESSED_FOLDER}/{table}.csv",  # GCS destination
-            bucket=GCS_BUCKET_NAME,  # GCS bucket name
-            gcp_conn_id=GCP_CONN_ID,  # GCP connection ID
-        )
-        # Execute the upload task for each file
-        upload_task.execute(context=kwargs)
     
 
 # Define the payload for running a notebook
@@ -186,7 +174,7 @@ with DAG(
 
     # Task to run the first Databricks notebook
     run_notebook_1 = DatabricksSubmitRunOperator(
-        task_id="run_notebook_1",
+        task_id="clean_data",
         databricks_conn_id=DATABRICKS_CONN_ID,
         json=notebook_task_params_1,
         dag=dag
@@ -194,39 +182,14 @@ with DAG(
 
     # Task to run the second Databricks notebook
     run_notebook_2 = DatabricksSubmitRunOperator(
-        task_id="run_notebook_2",
+        task_id="to_big_query",
         databricks_conn_id=DATABRICKS_CONN_ID,
         json=notebook_task_params_2,
         dag=dag
     )
 
-    # Task to upload processed CSVs back to GCS
-    upload_processed_task = PythonOperator(
-        task_id='upload_processed_to_gcs',
-        python_callable=upload_processed_to_gcs,
-        provide_context=True,
-        dag=dag
-    )
-
     # Chain the tasks together
-    chain(download_sqlite_task, extract_tables_task, upload_to_dbfs_task, run_notebook_1, run_notebook_2, upload_processed_task)
-
-
-    # notebook_1 = DatabricksNotebookOperator(
-    #     task_id="notebook1",
-    #     databricks_conn_id=DATABRICKS_CONN_ID,
-    #     notebook_path=DATABRICKS_NOTEBOOK_PATH_1,
-    #     source="WORKSPACE",
-    #     existing_cluster_id=DATABRICKS_JOB_CLUSTER_ID,  # Use the existing cluster ID
-    # )
-
-    # notebook_2 = DatabricksNotebookOperator(
-    #     task_id="notebook2",
-    #     databricks_conn_id=DATABRICKS_CONN_ID,
-    #     notebook_path=DATABRICKS_NOTEBOOK_PATH_2,
-    #     source="WORKSPACE",
-    #     existing_cluster_id=DATABRICKS_JOB_CLUSTER_ID,  # Use the existing cluster ID
-    # )
+    chain(download_sqlite_task, extract_tables_task, upload_to_dbfs_task, run_notebook_1, run_notebook_2)
 
     # export DATABRICKS_HOST="https://4025938785050141.1.gcp.databricks.com/"
     # export DATABRICKS_TOKEN="dapif5217f364e50250c317e25b7571df5b7"
