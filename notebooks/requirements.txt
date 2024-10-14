@@ -1,6 +1,0 @@
-pendulum
-pandas
-psycopg2-binary
-pyspark
-numpy
-sqlalchemy
