@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "shining-bazaar-436810-p2",
+  "private_key_id": "c4a529e5464e961b7d7b096e2de5583eb28cffeb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCitJPGTOuHhm3+\njgyd39gItShqgEakViZkupoaINQJrxFPiUT8vpJPYsAhM0gSSALMg6r5OvqBmGX2\nBcuKowKyJQx0Bq4rJKYXV0NaPMLe3R1W8xg5mBuVPWx3bWWowNuYBTcTXuNMq/aq\n7608lUw/+tCRrDo6gYZBZ3eDycFvtzmvTSktxwO4JK79+4jCwfmcRprGlfSzmXBq\n1VqDSv5EmzlITUwyoVUvHbT+Uu0FNJ93KvK9AIdKC2feAmbeIs0SvCP/fRNL3t1k\nSKl5MDkmzxxTi/6CKGeAq7Irc1SFDhLtctQeQJ8caLSmnEJnKVH3sPdfwozkW+ad\n07d1U0NtAgMBAAECggEATXt0Eg+obDo64GnyHS6vmPn4XLtoqLL0Bq0MXNv8Tf5G\nXpuOtFPmphJvT4A11qrfVlhvj8+j4xpZl+8LjqJxUres9gYGZDpIND5Ur0DXRj2D\nTthmVWsX25rMMBVzP4lUKdF1+G4MDYOo7J9F3t90V9WQBIdBlYIAFt54flSSnyme\nTvCHqloMLYFtv/j13OUAkvKGOOm9oRmKSB2pqXhdfkmTJtn4ioT4tC90uudG3dcf\neIozNAMHtdZwRcnO9QtC0pcsmb5Qoo8+tKRA1BN9q+a/26kH/RhzVBDd5ulHFedl\nvmkII274U6+U2oy1HX5W+vUezT42QQ6q7+T3V4tciwKBgQDP4O2N0Lt8D/zuENVg\nRjklbi3DoVSBV7azc47byaWscDbxz3azy9SzQ87mgmS+V7xJtQurflWlrNjrpap2\nZ4EpJfHh0mE7rxB8r7ZDK5OnD04OsVhTYAfvCMi/i+1+PxSEvxHdSCaAO4RJifWV\nVqcPCGKUd72aWG4WdgmJT45zrwKBgQDIXqSFOsj2EnCj3YFCBsuHXfAlUS5Ztvdg\nfxMQ/DW8Ry3D10YuQWhVP3YfWuC6UXgtNQ5YmIFBVv90rQiRko4zgUlS6hLNzqvC\nrr+Ta0YXp/gws1mvu+PGnVio7KBFH0h88/+WFir0UmvovPzGCjONp3qiIRSwNa/o\nbCKHY1HVowKBgH7gih1EiSnvmDC1lYZtVfPCi6wbi7hmENz2avs62COnWeG8/nY+\nslO3z1BhxZtncUSLe9PwB9ZW6Q7qzl/2TJ8QydFK1o3XC/kORfA5aKVOchYFqCM7\nOZxrgBtpDEtBtQRQmla08srRiKxZx8qeWNiUBZcYfmD2GDsdUDS+mfOBAoGAThv2\n7qj35lVR689RsDeN5/tKvoFjHD4jOU7QU/K9z+O/h3TIOwfscC8JETgQGxHfU2A3\nc3ogCSSs+QLrMDR9kr53owb0xZ4nfwE4VXOgI2Crc/C2qbcJGEgGY/O6lreXPn6v\nyAZkQFJRFq11rI4VgscjG0jiE78aD/T3kOe64xkCgYBvOqceJccwLqD1IAnbpevf\nkert9Mj46IJWMdfn3QULY9DV545MPj56Q9/7vcjvlGdh3f0SyWDHVrj7VOwk3Lyo\nh38D69WSqjo6o7SPdf/UJG2v+tGm1iOrTma4EsS4O/SfGrOcLq5rX1jmDpQyRchH\nG0xLUuVzdXd8h0HFiXL/sw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "xrbams-service-account@shining-bazaar-436810-p2.iam.gserviceaccount.com",
+  "client_id": "117898953204455025945",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/xrbams-service-account%40shining-bazaar-436810-p2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

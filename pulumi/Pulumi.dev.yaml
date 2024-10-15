@@ -1,0 +1,5 @@
+config:
+  databricks:host: https://4025938785050141.1.gcp.databricks.com/
+  databricks:token:
+    secure: AAABAKQ34rwDhajy0H8azpkh0HAVFqNaFokc+imZP7goQUcTXlJ55bq6Tb8CB+oouwj/s57MXF4UnRi0YP3aMc14qJA=
+  gcp:project: shining-bazaar-436810-p2

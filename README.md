@@ -42,6 +42,41 @@ The main use of this ETL pipeline is to have data ready to be queried for analyt
 -   **Data Migration**: Postgres to Databricks, Postgres to NoSQL.
 -   **Production Iac**: Terraform and Azure Databricks 
 
+## Running the Application
+
+This project uses Pulumi for infrastructure provisioning and Astro for Airflow deployment. Below are the steps to run the project locally:
+
+### Prerequisites
+- Python 3.x installed
+- Pulumi CLI installed
+- Docker installed (for Airflow and Astro)
+- Astro CLI installed
+- Google Cloud SDK installed (for deploying to BigQuery)
+
+### Step 1: Install Dependencies
+First, clone the repository and install the required Python packages:
+
+```bash
+git clone https://github.com/your-repo/project-name.git
+cd project-name
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+cd pulumi
+python3 -m venv venv
+source venv/bin/activate
+pulumi up
+
+cd ../  # Back to the root directory
+astro dev start
+
+pytest
+
+astro dev stop
+
+```
+
 ### Features
 
 -   **Scalability**: Designed to handle large-scale data processing with ease.
